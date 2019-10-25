@@ -43,7 +43,7 @@ public class Player {
       rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
 
       // high card
-      if ("A".equals(rank)) {
+      if ("A".equals(rank) || "Q".equals(rank) || "K".equals(rank)) {
         bet = pot;
       }
     }
