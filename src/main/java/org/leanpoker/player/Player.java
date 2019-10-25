@@ -38,15 +38,21 @@ public class Player {
     int newBet = (int) Math.floor(stack / 10);
 
     JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
+    Map<String, Integer> holeRankCount = new HashMap<>();
     for (JsonElement card : holeCards) {
       String rank = card.getAsJsonObject().get("rank").getAsString();
       rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
+      holeRankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
 
       String suit = card.getAsJsonObject().get("suit").getAsString();
       suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
 
-      // high card
-      if ("A".equals(rank) || "K".equals(rank)) {
+      // high cards
+      int highCardCound =
+          holeRankCount.getOrDefault("A", 0)
+              + holeRankCount.getOrDefault("K", 0)
+              + holeRankCount.getOrDefault("Q", 0);
+      if (highCardCound == 2) {
         newBet = currentBuyIn;
       }
     }
