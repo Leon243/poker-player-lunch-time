@@ -15,7 +15,7 @@ public class Player {
       JsonElement holeCardsElement = p.getAsJsonObject().get("hole_cards");
       if (holeCardsElement != null) {
         int stack = p.getAsJsonObject().get("stack").getAsInt();
-        return stack % 4;
+        return stack / 4;
       }
     }
     return 0;
