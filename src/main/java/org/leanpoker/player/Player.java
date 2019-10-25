@@ -39,7 +39,7 @@ public class Player {
     }
 
     //default
-    int newBet = (int) Math.floor(stack / 5);
+    int newBet = (int) Math.floor(stack / 10);
 
     JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
     for (JsonElement card : holeCards) {
