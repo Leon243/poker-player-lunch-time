@@ -60,7 +60,7 @@ public class Player {
     //having a pair or more
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
       if (entry.getValue() >= 2) {
-        newBet = currentBuyIn;
+        newBet = Math.min(currentBuyIn, stack / 2);
       }
       if (entry.getValue() >= 3) {
         newBet = stack;
