@@ -33,7 +33,7 @@ public class Player {
     }
 
     //default
-    int newBet = stack / 10;
+    int newBet = betMark(stack / 10, 0);
 
     JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
     Map<String, Integer> holeRankCount = new HashMap<>();
@@ -46,22 +46,22 @@ public class Player {
       suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
     }
 
-    // high cards
+    //high cards
     int highCardCound =
         holeRankCount.getOrDefault("A", 0)
             + holeRankCount.getOrDefault("K", 0)
             + holeRankCount.getOrDefault("Q", 0);
     if (highCardCound == 2) {
-      newBet = Math.min(currentBuyIn, stack / 2);
+      newBet = betMark(Math.min(currentBuyIn, stack / 2), 1);
     }
 
     //having a pair or more
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
       if (entry.getValue() >= 2) {
-        newBet = Math.min(currentBuyIn, stack / 2);
+        newBet = betMark(Math.min(currentBuyIn, stack / 2), 2);
       }
       if (entry.getValue() >= 3) {
-        newBet = stack;
+        newBet = betMark(stack, 3);
       }
     }
 
@@ -72,7 +72,7 @@ public class Player {
       if (rankCount.containsKey(straight[i])) {
         seqLen += 1;
         if (seqLen == 5) {
-          newBet = stack;
+          newBet = betMark(stack, 4);
         }
       } else {
         seqLen = 0;
@@ -91,27 +91,31 @@ public class Player {
       }
     }
     if (fullHouseTwo && fullHouseThree) {
-      newBet = stack;
+      newBet = betMark(stack, 5);
     }
 
     //flush
     for (Entry<String, Integer> entry : suitCount.entrySet()) {
       if (entry.getValue() == 4) {
-        newBet = currentBuyIn;
+        newBet = betMark(currentBuyIn, 6);
       }
       if (entry.getValue() >= 5) {
-        newBet = stack;
+        newBet = betMark(stack, 7);
       }
     }
 
     //all-in random
     int playersCount = object.get("players").getAsJsonArray().size();
     if (playersCount == 2 && Math.random() * 20 < 1) {
-      newBet = currentBuyIn;
+      newBet = betMark(currentBuyIn, 8);
     }
 
     return Math.min(currentBuyIn, newBet);
   }
 
   public static void showdown(JsonElement game) {}
+
+  public static int betMark(int bet, int mark) {
+    return bet / 10 * 10 + mark;
+  }
 }
