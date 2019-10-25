@@ -96,8 +96,11 @@ public class Player {
 
     //flush
     for (Entry<String, Integer> entry : suitCount.entrySet()) {
-      if (entry.getValue() >= 5) {
+      if (entry.getValue() == 4) {
         newBet = currentBuyIn;
+      }
+      if (entry.getValue() >= 5) {
+        newBet = stack;
       }
     }
 
