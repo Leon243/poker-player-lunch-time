@@ -13,6 +13,12 @@ public class Player {
     JsonObject object = request.getAsJsonObject();
     int pot = object.get("pot").getAsInt();
     int inAction = object.get("in_action").getAsInt();
+    int round = object.get("round").getAsInt();
+
+    if (round == 0 && Math.random() * 2 < 1) {
+      return 0;
+    }
+
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
     return Math.max((int) Math.floor(stack / 4), pot);
