@@ -35,7 +35,7 @@ public class Player {
     }
 
     //default
-    int newBet = (int) Math.floor(stack / 10);
+    int newBet = stack / 10;
 
     JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
     Map<String, Integer> holeRankCount = new HashMap<>();
@@ -46,15 +46,15 @@ public class Player {
 
       String suit = card.getAsJsonObject().get("suit").getAsString();
       suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
+    }
 
-      // high cards
-      int highCardCound =
-          holeRankCount.getOrDefault("A", 0)
-              + holeRankCount.getOrDefault("K", 0)
-              + holeRankCount.getOrDefault("Q", 0);
-      if (highCardCound == 2) {
-        newBet = Math.min(currentBuyIn, stack / 2);
-      }
+    // high cards
+    int highCardCound =
+        holeRankCount.getOrDefault("A", 0)
+            + holeRankCount.getOrDefault("K", 0)
+            + holeRankCount.getOrDefault("Q", 0);
+    if (highCardCound == 2) {
+      newBet = Math.min(currentBuyIn, stack / 2);
     }
 
     //having a pair or more
