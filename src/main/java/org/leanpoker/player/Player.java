@@ -50,8 +50,11 @@ public class Player {
 
     //having a pair
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
-      if (entry.getValue() > 1) {
+      if (entry.getValue() >= 2) {
         bet = pot;
+      }
+      if (entry.getValue() >= 3) {
+        bet = stack;
       }
     }
 
