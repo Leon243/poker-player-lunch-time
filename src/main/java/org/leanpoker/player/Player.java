@@ -56,13 +56,28 @@ public class Player {
     }
 
     //having a pair or more
+    int pairCount = 0;
+    int tripleCount = 0;
+    int quarCount = 0;
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
-      if (entry.getValue() >= 2) {
-        newBet = betMark(Math.min(currentBuyIn, stack / 2), 2);
+      if (entry.getValue() == 2) {
+        pairCount += 1;
       }
-      if (entry.getValue() >= 3) {
-        newBet = betMark(stack, 3);
+      if (entry.getValue() == 3) {
+        tripleCount += 1;
       }
+      if (entry.getValue() == 4) {
+        quarCount += 1;
+      }
+    }
+    if (pairCount == 1) {
+      newBet = betMark(Math.min(currentBuyIn, stack / 2), 2);
+    }
+    if (pairCount >= 2) {
+      newBet = betMark(stack, 3);
+    }
+    if (tripleCount > 0 || quarCount > 0) {
+      newBet = betMark(stack, 3);
     }
 
     //straight
