@@ -28,10 +28,14 @@ public class Player {
     int stack = player.get("stack").getAsInt();
 
     Map<String, Integer> rankCount = new HashMap<>();
+    Map<String, Integer> suitCount = new HashMap<>();
     JsonArray comunityCards = object.get("community_cards").getAsJsonArray();
     for (JsonElement card : comunityCards) {
       String rank = card.getAsJsonObject().get("rank").getAsString();
       rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
+
+      String suit = card.getAsJsonObject().get("suit").getAsString();
+      suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
     }
 
     //default
@@ -41,6 +45,9 @@ public class Player {
     for (JsonElement card : holeCards) {
       String rank = card.getAsJsonObject().get("rank").getAsString();
       rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
+
+      String suit = card.getAsJsonObject().get("suit").getAsString();
+      suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
 
       // high card
       if ("A".equals(rank) || "K".equals(rank)) {
@@ -85,6 +92,13 @@ public class Player {
     }
     if (fullHouseTwo && fullHouseThree) {
       newBet = stack;
+    }
+
+    //flush
+    for (Entry<String, Integer> entry : suitCount.entrySet()) {
+      if (entry.getValue() >= 5) {
+        newBet = currentBuyIn;
+      }
     }
 
     return Math.min(currentBuyIn, newBet);
