@@ -17,8 +17,6 @@ public class Player {
     JsonObject object = request.getAsJsonObject();
     int currentBuyIn = object.get("current_buy_in").getAsInt();
     int inAction = object.get("in_action").getAsInt();
-    int round = object.get("round").getAsInt();
-    int dealer = object.get("dealer").getAsInt();
 
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
@@ -101,6 +99,12 @@ public class Player {
       if (entry.getValue() >= 5) {
         newBet = currentBuyIn;
       }
+    }
+
+    //all-in random
+    int playersCount = object.get("players").getAsJsonArray().size();
+    if (playersCount == 2 && Math.random() * 10 < 1) {
+      newBet = currentBuyIn;
     }
 
     return Math.min(currentBuyIn, newBet);
