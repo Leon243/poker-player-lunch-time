@@ -1,7 +1,11 @@
 package org.leanpoker.player;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -23,13 +27,30 @@ public class Player {
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
 
-    int min = (int) Math.floor(stack / 5) + 1;
-    int max = pot; //(int) Math.floor(stack / 2) + 1;
-
-    if (pot <= max) {
-      return Math.max(min, pot);
+    Map<String, Integer> rankCount = new HashMap<>();
+    JsonArray comunityCards = object.get("community_cards").getAsJsonArray();
+    for (JsonElement card : comunityCards) {
+      String rank = card.getAsJsonObject().get("rank").getAsString();
+      rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
     }
-    return 0;
+
+    JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
+    for (JsonElement card : holeCards) {
+      String rank = card.getAsJsonObject().get("rank").getAsString();
+      rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
+    }
+
+    //default
+    int bet = (int) Math.floor(stack / 10);
+
+    //having a pair
+    for (Entry<String, Integer> entry : rankCount.entrySet()) {
+      if (entry.getValue() > 1) {
+        bet = pot;
+      }
+    }
+
+    return Math.min(pot, bet);
   }
 
   public static void showdown(JsonElement game) {}
