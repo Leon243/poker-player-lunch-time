@@ -15,7 +15,7 @@ public class Player {
     int inAction = object.get("in_action").getAsInt();
     int round = object.get("round").getAsInt();
 
-    if (round == 0 && Math.random() * 2 < 1) {
+    if (round == 0 && Math.random() * 3 < 1) {
       return 0;
     }
 
@@ -23,7 +23,7 @@ public class Player {
     int stack = player.get("stack").getAsInt();
 
     int min = (int) Math.floor(stack / 10) + 1;
-    int max = (int) Math.floor(stack / 2) + 1;
+    int max = (int) Math.floor(stack) + 1;
 
     if (pot < max) {
       return Math.max(min, pot);
