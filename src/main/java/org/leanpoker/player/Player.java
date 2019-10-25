@@ -11,10 +11,11 @@ public class Player {
 
   public static int betRequest(JsonElement request) {
     JsonObject object = request.getAsJsonObject();
+    int pot = object.get("pot").getAsInt();
     int inAction = object.get("in_action").getAsInt();
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
-    return (int) Math.floor(stack / 4);
+    return Math.max((int) Math.floor(stack / 4), pot);
   }
 
   public static void showdown(JsonElement game) {}
