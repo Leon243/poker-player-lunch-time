@@ -103,7 +103,7 @@ public class Player {
 
     //all-in random
     int playersCount = object.get("players").getAsJsonArray().size();
-    if (playersCount == 2 && Math.random() * 10 < 1) {
+    if (playersCount == 2 && Math.random() * 20 < 1) {
       newBet = currentBuyIn;
     }
 
