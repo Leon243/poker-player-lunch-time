@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 
 public class Player {
 
-  static final String VERSION = "Default Java folding player HAHA";
+  static final String VERSION = "2";
 
   public static int betRequest(JsonElement request) {
     if (Math.random() * 4 > 3) {
