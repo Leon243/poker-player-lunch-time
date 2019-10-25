@@ -48,7 +48,7 @@ public class Player {
       }
     }
 
-    //having a pair
+    //having a pair or more
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
       if (entry.getValue() >= 2) {
         newBet = currentBuyIn;
@@ -79,7 +79,7 @@ public class Player {
       if (entry.getValue() == 2) {
         fullHouseTwo = true;
       }
-      if (entry.getValue() == 3) {
+      if (entry.getValue() >= 3) {
         fullHouseThree = true;
       }
     }
