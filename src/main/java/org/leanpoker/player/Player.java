@@ -14,15 +14,16 @@ public class Player {
     int pot = object.get("pot").getAsInt();
     int inAction = object.get("in_action").getAsInt();
     int round = object.get("round").getAsInt();
+    int dealer = object.get("dealer").getAsInt();
 
-    if (round == 0 && Math.random() * 3 < 1) {
+    if (round == 0 && inAction == dealer) {
       return 0;
     }
 
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
 
-    int min = (int) Math.floor(stack / 10) + 1;
+    int min = (int) Math.floor(stack / 5) + 1;
     int max = (int) Math.floor(stack) + 1;
 
     if (pot < max) {
