@@ -15,7 +15,7 @@ public class Player {
 
   public static int betRequest(JsonElement request) {
     JsonObject object = request.getAsJsonObject();
-    int pot = object.get("pot").getAsInt();
+    int currentBuyIn = object.get("current_buy_in").getAsInt();
     int inAction = object.get("in_action").getAsInt();
     int round = object.get("round").getAsInt();
     int dealer = object.get("dealer").getAsInt();
@@ -35,7 +35,7 @@ public class Player {
     }
 
     //default
-    int bet = (int) Math.floor(stack / 10);
+    int newBet = (int) Math.floor(stack / 10);
 
     JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
     for (JsonElement card : holeCards) {
@@ -44,21 +44,21 @@ public class Player {
 
       // high card
       if ("A".equals(rank) || "Q".equals(rank) || "K".equals(rank)) {
-        bet = pot;
+        newBet = currentBuyIn;
       }
     }
 
     //having a pair
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
       if (entry.getValue() >= 2) {
-        bet = pot;
+        newBet = currentBuyIn;
       }
       if (entry.getValue() >= 3) {
-        bet = stack;
+        newBet = stack;
       }
     }
 
-    return Math.min(pot, bet);
+    return Math.min(currentBuyIn, newBet);
   }
 
   public static void showdown(JsonElement game) {}
