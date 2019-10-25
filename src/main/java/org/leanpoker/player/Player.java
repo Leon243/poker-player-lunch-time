@@ -34,14 +34,19 @@ public class Player {
       rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
     }
 
+    //default
+    int bet = (int) Math.floor(stack / 10);
+
     JsonArray holeCards = player.get("hole_cards").getAsJsonArray();
     for (JsonElement card : holeCards) {
       String rank = card.getAsJsonObject().get("rank").getAsString();
       rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
-    }
 
-    //default
-    int bet = (int) Math.floor(stack / 10);
+      // high card
+      if ("A".equals(rank)) {
+        bet = pot;
+      }
+    }
 
     //having a pair
     for (Entry<String, Integer> entry : rankCount.entrySet()) {
