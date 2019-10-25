@@ -21,7 +21,14 @@ public class Player {
 
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
-    return Math.max((int) Math.floor(stack / 4), pot);
+
+    int min = (int) Math.floor(stack / 10) + 1;
+    int max = (int) Math.floor(stack / 2) + 1;
+
+    if (pot < max) {
+      return Math.max(min, pot);
+    }
+    return 0;
   }
 
   public static void showdown(JsonElement game) {}
