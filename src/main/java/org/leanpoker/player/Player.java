@@ -20,10 +20,6 @@ public class Player {
     int round = object.get("round").getAsInt();
     int dealer = object.get("dealer").getAsInt();
 
-    if (round == 0 && inAction == dealer) {
-      return 0;
-    }
-
     JsonObject player = object.get("players").getAsJsonArray().get(inAction).getAsJsonObject();
     int stack = player.get("stack").getAsInt();
 
