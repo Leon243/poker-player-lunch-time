@@ -24,9 +24,9 @@ public class Player {
     int stack = player.get("stack").getAsInt();
 
     int min = (int) Math.floor(stack / 5) + 1;
-    int max = (int) Math.floor(stack) + 1;
+    int max = pot; //(int) Math.floor(stack / 2) + 1;
 
-    if (pot < max) {
+    if (pot <= max) {
       return Math.max(min, pot);
     }
     return 0;
