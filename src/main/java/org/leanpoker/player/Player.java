@@ -72,6 +72,21 @@ public class Player {
       }
     }
 
+    //full house
+    boolean fullHouseTwo = false;
+    boolean fullHouseThree = false;
+    for (Entry<String, Integer> entry : rankCount.entrySet()) {
+      if (entry.getValue() == 2) {
+        fullHouseTwo = true;
+      }
+      if (entry.getValue() == 3) {
+        fullHouseThree = true;
+      }
+    }
+    if (fullHouseTwo && fullHouseThree) {
+      newBet = stack;
+    }
+
     return Math.min(currentBuyIn, newBet);
   }
 
