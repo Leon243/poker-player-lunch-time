@@ -53,7 +53,7 @@ public class Player {
               + holeRankCount.getOrDefault("K", 0)
               + holeRankCount.getOrDefault("Q", 0);
       if (highCardCound == 2) {
-        newBet = currentBuyIn;
+        newBet = Math.min(currentBuyIn, stack / 2);
       }
     }
 
