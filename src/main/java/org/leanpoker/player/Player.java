@@ -58,6 +58,20 @@ public class Player {
       }
     }
 
+    //straight
+    String[] straight = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+    int seqLen = 0;
+    for (int i = 0; i < straight.length; i++) {
+      if (rankCount.containsKey(straight[i])) {
+        seqLen += 1;
+        if (seqLen == 5) {
+          newBet = stack;
+        }
+      } else {
+        seqLen = 0;
+      }
+    }
+
     return Math.min(currentBuyIn, newBet);
   }
 
